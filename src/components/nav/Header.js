@@ -52,23 +52,26 @@ const Header = () => {
   return (
     <div className="container-fluid p-0 pos"  >
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal"  style={{backgroundColor:"white", width:"100%"}}  className  >
-        <Item key="home"  style={{position:"absolute", left:"10rem"}}>
+        <Item key="home" className="mr-4"  >
           <Link to="/" className="text-secondary" style={{fontWeight:"bolder", fontSize:"medium"}}>Home</Link>
         </Item>
 
-        <Item key="shop"   className=""  style={{position:"absolute", left:"18rem"}}>
+        <Item key="shop" className="mr-4" >
           <Link to="/shop" className="text-secondary" style={{fontWeight:"bolder", fontSize:"medium"}}>Shop</Link>
         </Item>
 
       
-        <Item key="cart"  style={{position:"absolute", left:"26rem"}}>
+        <Item key="cart" className="mr-4" >
           <Link to="/cart"   style={{fontSize:"medium"}}>
             <Badge count={cart.length} offset={[9, 0]} >
              <b className="text-secondary" style={{fontWeight:"bolder", fontSize:"medium"}}> Cart</b>
             </Badge>
           </Link>
         </Item>
-  
+
+        <Item disabled={Item} key="search" className="ml-auto p-1" style={{width:"5 rem"}}>
+          <Search />
+        </Item>
 
         {!user && (
           <Item key="login" icon={<UserOutlined className="text-secondary" style={{fontWeight:"bolder", fontSize:"medium"}} />} className="">
@@ -108,9 +111,6 @@ const Header = () => {
             </Item>
           </SubMenu>
         )}
-        <span className="ml-auto p-1" style={{width:"5 rem"}}>
-          <Search />
-        </span>
       </Menu>
     </div>
   );
