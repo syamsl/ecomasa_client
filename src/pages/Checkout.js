@@ -18,17 +18,16 @@ import AddAddressForm from "../components/forms/AddAddressForm";
 
 import Paypal from "../components/Paypal";
 
-
 const Checkout = ({ history }) => {
   const [state, setState] = useState(false);
 
-  const [name, setName] = useState("")
-  const [mobile, setMobile] = useState("")
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
   const [street, setStreet] = useState("");
-  const [pincode, setPincode] = useState("")
-  const [city, setCity] = useState("")
-  const [newAddress, setNewAddress] = useState("")
-  const [addressName, setAddressName] = useState("")
+  const [pincode, setPincode] = useState("");
+  const [city, setCity] = useState("");
+  const [newAddress, setNewAddress] = useState("");
+  const [addressName, setAddressName] = useState("");
 
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
@@ -36,7 +35,7 @@ const Checkout = ({ history }) => {
   const [deliveryAddress, setDeliveryAddress] = useState([]);
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState("");
-  //discount price
+
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
   const [discountError, setDiscountError] = useState("");
 
@@ -57,7 +56,7 @@ const Checkout = ({ history }) => {
       setName(u.data.name);
       setMobile(u.data.mobile);
       setAddress(u.data.address);
-    })
+    });
 
   useEffect(() => {
     //getUserDetails
@@ -65,9 +64,8 @@ const Checkout = ({ history }) => {
     //   addCheckbox()
     // } else{
 
-    loadUserDetails()
-
-  }, [state])
+    loadUserDetails();
+  }, [state]);
 
   const emptyCart = () => {
     //remove from localStorage
@@ -159,79 +157,88 @@ const Checkout = ({ history }) => {
     });
   };
 
-
-
   const saveAdd = (e) => {
-    e.preventDefault()
-    
-    let add_id = document.querySelector('input[name="view_address"]:checked').value
+    e.preventDefault();
 
-      address.map((c) => {
-        if (c.id == add_id) {
-  
-          dispatch({
-            type: "DELIVERY_ADD",
-            payload: c,
-          })
-          toast.success(`Delivery Address of ${c.name} is saved`)
-          setAddressSaved(true)
-        }
-      })
-   
-  }
+    let add_id = document.querySelector(
+      'input[name="view_address"]:checked'
+    ).value;
+
+    address.map((c) => {
+      if (c.id == add_id) {
+        dispatch({
+          type: "DELIVERY_ADD",
+          payload: c,
+        });
+        toast.success(`Delivery Address of ${c.name} is saved`);
+        setAddressSaved(true);
+      }
+    });
+  };
 
   const saveNewAddress = (e) => {
     e.preventDefault();
     setState(!state);
-  }
+  };
 
   const handleSubmit = (e) => {
     //e.preventDefault();
-    editUserDetails(user.token, name, mobile, { addressName, street, city, newAddress, pincode })
-      .then((res) => {
-        // console.log("RES --->", res);
-        toast.success("New Address added")
-        loadUserDetails()
-      })
-  }
-
+    editUserDetails(user.token, name, mobile, {
+      addressName,
+      street,
+      city,
+      newAddress,
+      pincode,
+    }).then((res) => {
+      // console.log("RES --->", res);
+      toast.success("New Address added");
+      loadUserDetails();
+    });
+  };
 
   const showAddress = () => (
     <>
       <form>
         {address.map((c) => (
-
-          < div className="mt-2" key={c.id}>
+          <div className="mt-2" key={c.id}>
             {/* <input type="radio" disabled checked value=""></input> */}
-            <input type="radio" id="c.id" checked value={c.id} name="view_address" />
+            <input
+              type="radio"
+              id="c.id"
+              checked
+              value={c.id}
+              name="view_address"
+            />
             <span>
               {`${c.name}`}
               {/* <textarea type="checkbox"  className="grad-input" cols="30" rows="2" type="radio" checked  value={`${c.name} \nStreet: ${c.street} \nPincode: ${c.pincode} \nAddress: ${c.address}`} /> */}
             </span>
             <br />
-            <span>
-              {`\tStreet: ${c.street}`}
-            </span>
+            <span>{`\tStreet: ${c.street}`}</span>
             <br />
-            <span>
-              {`\tPincode: ${c.pincode}`}
-            </span>
+            <span>{`\tPincode: ${c.pincode}`}</span>
             <br />
-            <span>
-              {`\tAddress: ${c.address}`}
-            </span>
+            <span>{`\tAddress: ${c.address}`}</span>
           </div>
         ))}
         <div>
-          <button className="btn btn-raised text-dark mt-2 grad-button"  onClick={saveAdd}>Save</button>
+          <button
+            className="btn btn-raised text-dark mt-2 grad-button"
+            onClick={saveAdd}
+          >
+            Save
+          </button>
         </div>
         <div>
-          <button className="btn btn-raised text-dark mt-2 grad-button" onClick={saveNewAddress}>Add Address</button>
+          <button
+            className="btn btn-raised text-dark mt-2 grad-button"
+            onClick={saveNewAddress}
+          >
+            Add Address
+          </button>
         </div>
-        <div className="col-md-12">
-        </div>
-      </form >
-
+        <div className="col-md-12"></div>
+      </form>
 
       {/* <div className="ml-5" style={{ width: "80%" }}>
     //     <ReactQuill theme="snow" value={address} onChange={setAddress} />
@@ -253,18 +260,18 @@ const Checkout = ({ history }) => {
             {p.product.offerPrice ? (
               <span>
                 <span className="text-success">
-                {p.product.title} ({p.color}) x {p.count} = Rs.{" "}
-               {p.product.offerPrice * p.count}
+                  {p.product.title} ({p.color}) x {p.count} = Rs.{" "}
+                  {p.product.offerPrice * p.count}
                 </span>
               </span>
             ) : (
-                <span>
-                  <span className="text-success">
+              <span>
+                <span className="text-success">
                   {p.product.title} ({p.color}) x {p.count} = Rs.{" "}
                   {p.product.price * p.count}
-                  </span>
                 </span>
-              )}
+              </span>
+            )}
           </p>
         </div>
       ))}
@@ -293,7 +300,12 @@ const Checkout = ({ history }) => {
   );
 
   const createCashOrder = () => {
-    createCashOrderForUser(user.token, COD, couponTrueOrFalse, deliverAddress).then((res) => {
+    createCashOrderForUser(
+      user.token,
+      COD,
+      couponTrueOrFalse,
+      deliverAddress
+    ).then((res) => {
       // console.log("USER CASH ORDER CREATED--->", res);
       //emptycart from redux, localStorage, reset coupon, reset COD, redirect
       if (res.data.ok) {
@@ -333,7 +345,6 @@ const Checkout = ({ history }) => {
       }
     });
   };
-
 
   return (
     <div className="container -fluid mt-5">
@@ -404,7 +415,7 @@ const Checkout = ({ history }) => {
                   >
                     Place Order-Stripe Pay
                   </button>
-                  {addressSaved && products.length >0&& (
+                  {addressSaved && products.length > 0 && (
                     <Paypal couponTrueOrFalse={couponTrueOrFalse} />
                   )}
                 </>
@@ -425,17 +436,27 @@ const Checkout = ({ history }) => {
 
       <div className="row">
         <div className="col-md-8">
-          <AddAddressForm handleSubmit={handleSubmit} setAddressName={setAddressName} setStreet={setStreet} setPincode={setPincode} setCity={setCity} setNewAddress={setNewAddress} style={state ? 'block' : 'none'} />
+          <AddAddressForm
+            handleSubmit={handleSubmit}
+            setAddressName={setAddressName}
+            setStreet={setStreet}
+            setPincode={setPincode}
+            setCity={setCity}
+            setNewAddress={setNewAddress}
+            style={state ? "block" : "none"}
+          />
         </div>
         <div className="col-md-4">
           <hr />
-          <h2 className="text-center text-secondary shaw  mt-5 ">Apply Coupon</h2>
+          <h2 className="text-center text-secondary shaw  mt-5 ">
+            Apply Coupon
+          </h2>
           <br />
           {discountError && <p className="text-danger ml-5">{discountError}</p>}
           {showApplyCoupon()}
-          <br /></div>
+          <br />
+        </div>
       </div>
-
     </div>
   );
 };

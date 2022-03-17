@@ -70,7 +70,7 @@ const History = () => {
 
   const cancelOrder = (orderId) => {
     if (window.confirm("Are you sure want to cancel order ?")) {
-      let orderStatus = "Cancelled"
+      let orderStatus = "Cancelled";
       changeStatus(orderId, orderStatus, user.token)
         .then((res) => {
           // console.log("ORDER CANCELLED--->", res)
@@ -79,10 +79,9 @@ const History = () => {
         })
         .catch((err) => {
           // console.log("CANCEL ERR--->", err)
-        })
+        });
     }
-
-  }
+  };
 
   const showEachOrders = () =>
     orders.map((order, i) => (
@@ -91,10 +90,17 @@ const History = () => {
         {showOrderInTable(order)}
         <div className="row">
           <div className="col">
-            {order.orderStatus !== "Cancelled" && order.orderStatus !== "Completed" && (
-              <button className="btn btn-raised btn-danger" onClick={() => { cancelOrder(order._id) }}>cancel order</button>
-            )}
-
+            {order.orderStatus !== "Cancelled" &&
+              order.orderStatus !== "Completed" && (
+                <button
+                  className="btn btn-raised btn-danger"
+                  onClick={() => {
+                    cancelOrder(order._id);
+                  }}
+                >
+                  cancel order
+                </button>
+              )}
           </div>
         </div>
 

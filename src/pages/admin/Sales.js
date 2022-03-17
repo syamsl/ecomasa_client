@@ -4,6 +4,7 @@ import {  getWeekSales, getMonthSales, getYearSales, getCustomSales } from "../.
 import { useSelector } from 'react-redux'
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import SalesReportPdf from "../../components/order/SalesReportPdf";
+import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 
 

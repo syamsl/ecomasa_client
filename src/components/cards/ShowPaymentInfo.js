@@ -10,7 +10,7 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => {
         {"   /   "}
         <span>
           Amount:{"  "}
-          {(order.paymentIntent.amount).toLocaleString("en-US", {
+          {order.paymentIntent.amount.toLocaleString("en-US", {
             style: "currency",
             currency: "inr",
           })}
@@ -20,11 +20,13 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => {
         {"/"}
         <span>Method: {order.paymentIntent.payment_method_types[0]}</span>
         {"  /   "}
-        
-        <span>Payment: {order.paymentIntent.payment_method_types[0].toUpperCase()}</span>
+
+        <span>
+          Payment: {order.paymentIntent.payment_method_types[0].toUpperCase()}
+        </span>
         {"   /   "}
         <span>
-        <br />
+          <br />
           Ordered on:{"  "}{" "}
           {new Date(order.paymentIntent.created * 1000).toLocaleString()}
         </span>
@@ -34,32 +36,32 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => {
             STATUS: {order.orderStatus}
           </span>
         )} */}
-          { order.orderStatus=="Cancelled"  && (
+        {order.orderStatus === "Cancelled" && (
           <span className="badge bg-danger p-2  text-white">
             STATUS: {order.orderStatus}
           </span>
         )}
-         { order.orderStatus=="Not Processed"  && (
+        {order.orderStatus === "Not Processed" && (
           <span className="badge bg-primary p-2  text-white">
             STATUS: {order.orderStatus}
           </span>
         )}
-         { order.orderStatus=="Cash On Delivery"  && (
+        {order.orderStatus === "Cash On Delivery" && (
           <span className="badge bg-warning p-2  text-white">
             STATUS: {order.orderStatus}
           </span>
         )}
-         { order.orderStatus=="Processing"  && (
+        {order.orderStatus === "Processing" && (
           <span className="badge bg-info p-2  text-white">
             STATUS: {order.orderStatus}
           </span>
         )}
-         { order.orderStatus=="Dispatched"  && (
+        {order.orderStatus === "Dispatched" && (
           <span className="badge bg-secondary p-2 text-white">
             STATUS: {order.orderStatus}
           </span>
         )}
-        { order.orderStatus=="Completed"  && (
+        {order.orderStatus === "Completed" && (
           <span className="badge bg-success p-2 text-white">
             STATUS: {order.orderStatus}
           </span>

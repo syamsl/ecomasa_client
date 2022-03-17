@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../functions/rating";
-import { GlassMagnifier} from "react-image-magnifiers";
+import { GlassMagnifier } from "react-image-magnifiers";
 
 const { TabPane } = Tabs;
 
@@ -65,11 +65,14 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
   const handleAddToWishlist = (e) => {
     e.preventDefault();
-    addToWishlist(product._id, user.token).then((res) => {
-      // console.log("ADDED TO WISHLIST", res.data);
-      toast.success("Added to Wishlist");
-      // history.push("/user/wishlist");
-    });
+    if (user) {
+      addToWishlist(product._id, user.token).then((res) => {
+        // console.log("ADDED TO WISHLIST", res.data);
+        toast.success("Added to Wishlist");
+        // history.push("/user/wishlist");
+      });
+    } else toast.error("Login to add to wishlist");
+
   };
 
   return (
@@ -77,24 +80,23 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       <div className="col-md-4 offset-md-1 mt-5">
         {images && images.length ? (
           <Carousel showArrows={true} autoPlay infiniteLoop>
-
-             {images && images.map((i) => (
-              <GlassMagnifier
-                imageSrc={i.url}
-                key={i.public_id}
-                magnifierSize="200px"
-                square={true}
-                magnifierPosition="over"
-                imagePosition="over"
-                largeImageSrc={i.url}
-                largeImageWidth="400px"
-                largeImageHeight="400px"
-                />))}
+            {images &&
+              images.map((i) => (
+                <GlassMagnifier
+                  imageSrc={i.url}
+                  key={i.public_id}
+                  magnifierSize="200px"
+                  square={true}
+                  magnifierPosition="over"
+                  imagePosition="over"
+                  largeImageSrc={i.url}
+                  largeImageWidth="400px"
+                  largeImageHeight="400px"
+                />
+              ))}
 
             {/* {images && images.map((i) => <img src={i.url} key={i.public_id} />)} */}
-
           </Carousel>
-        
         ) : (
           <Card cover={<img src={Laptop} className="mb-3 card-image" />}></Card>
         )}
@@ -109,7 +111,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       </div>
 
       <div className="col-md-5 mt-5">
-        <h2 className="bg-info grad text-secondary shaw p-3 text-center">{title}</h2>
+        <h2 className="bg-info grad text-secondary shaw p-3 text-center">
+          {title}
+        </h2>
 
         {product && product.ratings && product.ratings.length > 0 ? (
           showAverage(product)
